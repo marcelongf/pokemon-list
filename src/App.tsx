@@ -1,11 +1,12 @@
+import { Route, Routes } from 'react-router-dom';
+import routes from './routes';
 import './App.css'
 
 function App() {
   return (
-    <>
-      <div>
-      </div>
-    </>
+    <Routes>
+      {routes.map((route) => <Route key={route.name} path={route.path} element={route.component} />)}
+    </Routes>
   )
 }
 
