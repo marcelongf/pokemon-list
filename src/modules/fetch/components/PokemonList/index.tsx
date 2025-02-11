@@ -1,17 +1,20 @@
 import PokemonCard from "../../../../common/components/PokemonCard"
-import useGetData from "../../../../common/hooks/useGetData"
+import usePokemon from "../../../../common/hooks/usePokemon";
 
-export type PokemonListProps = {
-  page: number
-}
+export default () => {
+  const { data: pokemons, isFetching, isError } = usePokemon();
 
-export default ({
-  page
-}: PokemonListProps) => {
-  const pokemons = useGetData(page);
+  if (isFetching) {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    return <div>Something occured while fetching the data, try again later</div>
+  }
+
   return (
     <div className="flex flex-wrap gap-2 max-w-2xl">
-      {pokemons?.results?.map((pokemon) => <PokemonCard key={pokemon.name} name={pokemon.name} />)}
+      {pokemons?.map((pokemon) => <PokemonCard key={pokemon.name} name={pokemon.name} />)}
     </div>
   )
 }
